@@ -141,9 +141,15 @@ classdef CsvWriter < handle
                         this.writeLine(strRow);
                     end
                 case 'char'
-                    for iRow=1:size(data,1)
-                        strRow = this.printElement(data(iRow,:));
+                    if isempty(data)
+                        % when data is an empty char make a empty line
+                        strRow = printElement(this,data);
                         this.writeLine(strRow);
+                    else
+                        for iRow=1:size(data,1)
+                            strRow = this.printElement(data(iRow,:));
+                            this.writeLine(strRow);
+                        end
                     end
                 otherwise
                     errror('Uknown variable type to write to csv.')
